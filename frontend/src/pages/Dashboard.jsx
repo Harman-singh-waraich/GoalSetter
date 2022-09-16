@@ -1,7 +1,8 @@
 import {useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {useSelector,useDispatch} from 'react-redux'
-import {reset,getGoals} from '../features/goals/goalSlice'
+import {getGoals} from '../features/goals/goalSlice'
+import {reset} from '../features/auth/authSlice'
 import GoalForm from '../components/GoalForm'
 import Spinner from '../components/Spinner'
 import GoalItem from '../components/GoalItem'
@@ -25,7 +26,7 @@ function Dashboard() {
     return () =>{
       dispatch(reset())
     }
-  },[user,navigate,isError,message,dispatch])
+  },[user,navigate,dispatch])
 
   if(isloading){
     return <Spinner/>
@@ -38,7 +39,7 @@ function Dashboard() {
     </section>
     <GoalForm/>
     <section className="content">
-      {goals.length >0 ? (<div className='goals'>
+      {goals && goals.length >0 ? (<div className='goals'>
         {goals.map((goal)=>(
           <GoalItem key={goal._id} goal={goal}/>
         ))}
